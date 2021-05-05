@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Meu primeiro jogo multiplayer</title>
+  </head>
+
+  <style>
+    #screen {
+      border: 10px solid #ccc;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      image-rendering: -moz-crisp-edges;
+      width: 400px;
+      height: 400px;
+    }
+  </style>
+
+  <body>
+    <canvas id="screen" height="10" width="10"></canvas>
+
+    <script>
+      const screen = document.getElementById('screen')
+      const context = screen.getContext('2d')
+  
+     const gameState = {
+       players: {
+         'player1': { x:2, y:3 },
+         'player2': { x:5, y:8 },
+       },
+       fruits: {
+         'fruit1': { x: 1, y:4}
+       },
+     }
+
+     renderScreen()
+
+     function renderScreen() {
+      clearScreen() 
+      
+      for (playerId in gameState.players) {
+         const player = gameState.players[playerId]
+         context.fillStyle = 'black'
+         context.fillRect(player.x, player.y, 1, 1)
+       }
+
+       for (fruitId in gameState.fruits) {
+         const fruit = gameState.fruits[fruitId]
+         context.fillStyle = 'green',
+         context.fillRect(fruit.x, fruit.y, 1, 1)
+       }
+
+       requestAnimationFrame(renderScreen)
+     }
+
+     function clearScreen() {
+       context.fillStyle = 'white'
+       context.fillRect(0, 0, 10, 10)
+     }
+    </script>
+  </body>
+</html>

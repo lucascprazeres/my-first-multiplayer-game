@@ -1,4 +1,4 @@
-export default function createKeyboardListener() {
+export default function createKeyboardListener(document) {
   const state = {
     observers: [],
   }
@@ -13,7 +13,7 @@ export default function createKeyboardListener() {
     }
   }
 
-  addEventListener("keydown", handleKeydown)
+  document.addEventListener("keydown", handleKeydown)
 
   function handleKeydown(event) {
     const keyPressed = event.key

@@ -1,0 +1,69 @@
+%% ------------- Portuguese version ------------
+% \documentclass{sbrt}
+% \usepackage[english,brazil]{babel}
+% \usepackage[utf8]{inputenc}
+% \newtheorem{theorem}{Teorema}
+%% ---------------------------------------------
+
+%% If writing in English, remove the lines above
+%% and uncomment the lines below
+
+%% ------------- English version ---------------
+\documentclass[english]{sbrt}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[top=2cm,left=2cm,right=3cm,bottom=3cm]{geometry}
+\usepackage{titlesec}
+\newtheorem{theorem}{Theorem}
+%% ---------------------------------------------
+
+\titlespacing*{\section}
+  {0pt}{18pt}{18pt}
+  
+\titlespacing*{\subsection}
+  {0pt}{18pt}{18pt}
+
+\begin{document}
+
+\title{Multiplayer game (a decidir título)}
+
+\author{Tiago da Silva Guerreiro and Lucas Costa dos Prazeres
+    \thanks{Special thanks to professor Eduardo Cerqueira, ITEC, UFPA, Belém-PA, e-mail: cerqueira@ufpa.br}%
+}
+
+\maketitle
+
+\baselineskip = 18pt
+
+
+\begin{abstract}
+    abstract.
+\end{abstract}
+\begin{keywords}
+    keywords.
+\end{keywords}
+
+\section{\textbf{Introduction}}
+Falar sobre o nosso projeto, nossos objetivos com ele e seus componentes
+
+\section{\textbf{Background}}
+Discorrer brevemente sobre websockets (como a interação ocorre, suas etapas, etc). É interessante ser coisas que citaremos na parte da simulação.
+
+\section{\textbf{Game}}
+Explicar o jogo em si e colocar algumas imagens, não deve tomar muito tempo.
+
+\section{\textbf{Simulation}}
+Fazer a simulação da perda de pacotes que o professor sugeriu, ou alguma outra interessante (talvez achemos alguma na leitura dos papers).
+
+\section{\textbf{Conclusion}}
+Concluir o trabalho daquele jeito tradicional, comentando sobre os resultados.
+
+\cite{maodv01} Pra não dar erro.
+
+\bibliography{sbrt}
+\bibliographystyle{IEEEtran}
+
+\end{document}

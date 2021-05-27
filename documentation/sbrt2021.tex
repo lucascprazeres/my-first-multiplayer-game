@@ -71,6 +71,7 @@ using the Wireshark [x] tool to compare the packet drop observed in a websocket 
 This article is organized as follows: Section 2 introduces related works. Section 3 explains the game architecture. Section 4 presents the results obtained, and Section 5 concludes the paper.
 
 \section{\textbf{Related Works / Technical Background}}
+
 Discorrer brevemente sobre websockets (como a interação ocorre, suas etapas, etc). É interessante ser coisas que citaremos na parte da simulação.
 
 \section{\textbf{The Game}}
@@ -111,7 +112,7 @@ Then, the client request the game page via regular HTTP request, which is repond
 game state data structure, which is used by the client side to render the game screen. Meawhile, on the server side, a new websocket connection is registered and an "add-player" message its propagated to all the previously connected clients and also changes the game state on the server.
 Every time a player moves, leaves the page or triggers another kind of event, its own game state is updated and a notification is sent to the server, which is responsible for syncronizing all players states by notifying them as well.
 
-\section{\textbf{Simulation}}
+\section{\textbf{Results}}
 Fazer a simulação da perda de pacotes que o professor sugeriu, ou alguma outra interessante (talvez achemos alguma na leitura dos papers).
 
 \section{\textbf{Conclusion}}

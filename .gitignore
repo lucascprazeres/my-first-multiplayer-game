@@ -102,3 +102,14 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Temporary latex files
+
+documentation/*.aux
+documentation/*.log
+documentation/*.out
+documentation/*.synctex.gz
+documentation/*.bbl
+documentation/*.fls
+documentation/*.blg
+documentation/*.fdb_latexmk

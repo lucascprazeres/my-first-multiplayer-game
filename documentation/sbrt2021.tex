@@ -11,7 +11,6 @@
 \documentclass[english]{sbrt}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{cite}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage[top=2cm,left=2cm,right=3cm,bottom=3cm]{geometry}
@@ -146,10 +145,5 @@ due to obstables like walls or doors, or even the mobility of the client.
 
 \section{\textbf{Conclusion}}
 This paper presented an analysis of the websocket traffic in a simple multiplayer game, collected using the Wireshark tool, in two different situations. The results suggests that including a physical barrier in the communication significantly increases the number of packet drops, since it lowers the stability. Also, the packet drops in the end of the figures~\ref{websocket-traffic-near} and~\ref{websocket-traffic-door} is a consequence of client disconnection, while the high flow in the beginning happens due to bootstrap actions. The authors conclude that websocket connections provide the reliability, robustness and high-performance needed for multiplayer browser-based games, despite of the packet drops presented in section IV.
-
-\cite{chen2011framework}
-
-\bibliography{sbrt}
-\bibliographystyle{IEEEtran}
 
 \end{document}

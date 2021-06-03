@@ -1,14 +1,17 @@
-export default function updateScoreboard(document, game) {
-  console.log(game.state.players)
+export default function updateScoreboard(document, game, currentPlayerId) {
   const board = getScoreboardFromDOM(document)
 
   removePlayersFrom(board)
 
   for (const playerId in game.state.players) {
     const { score } = game.state.players[playerId]
-    const playerRow = createPlayerRow(playerId, score)
+    let playerRow = createPlayerRow(playerId, score)
+    if (playerId === currentPlayerId) {
+      playerRow = getHighlightedPlayer(playerRow)
+    }
     appendPlayerOnScoreboard(playerRow, board)
   }
+
 }
 
 function removePlayersFrom(board) {
@@ -30,7 +33,7 @@ function getScoreboardFromDOM(document) {
 
 function createPlayerRow(playerId, score) {
   const playerRow = document.createElement("tr")
-  playerRow.className = "player-row"
+  playerRow.classList.add("player-row")
 
   const playerIdCell = document.createElement("td")
   const playerIdText = document.createTextNode(playerId)
@@ -49,4 +52,9 @@ function createPlayerRow(playerId, score) {
 
 function appendPlayerOnScoreboard(playerRow, board) {
   board.appendChild(playerRow)
+}
+
+function getHighlightedPlayer(playerRow) {
+  playerRow.classList.add("current")
+  return playerRow
 }

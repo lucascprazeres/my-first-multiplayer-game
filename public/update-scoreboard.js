@@ -31,6 +31,4 @@ function clearScoreBoard(document) {
   for(const player of playerRowList) {
     player.remove()
   }
-
-  console.log(board.getElementsByClassName("player-row"))
 }

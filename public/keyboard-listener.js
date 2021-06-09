@@ -27,6 +27,7 @@ export default function createKeyboardListener(document) {
       type: 'move-player',
       playerId: state.playerId,
       keyPressed,
+      initialTimestamp: performance.now(),
     }
 
     notifyAll(command)

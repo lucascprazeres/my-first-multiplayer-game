@@ -25,6 +25,7 @@
       import createKeyboardListener from "./keyboard-listener.js"
       import renderScreen from "./render-screen.js"
       import updateScoreBoard from "./update-scoreboard.js"
+      import { getIntervalFrom, getTimestamp } from "./benchmark.js"
 
       const game = createGame()
       game.start()
@@ -32,7 +33,16 @@
 
       const socket = io()
 
+      const connectionStartTime = getTimestamp()
+
+      setInterval(() => {
+        moveDelayValues.forEach(console.log)
+      }, 3000)
+
       socket.on("connect", () => {
+        const connectionDelay = getIntervalFrom(connectionStartTime)
+        console.log(`took ${connectionDelay} ms to connect.`)
+
         const playerId = socket.id
 
         const screen = document.getElementById('screen')
@@ -70,6 +80,10 @@
       })
 
       socket.on("move-player", command => {
+        // this block of code will only work on the active player's browser
+        const moveDelayInterval = getIntervalFrom(command.initialTimestamp)
+        console.log(`took ${moveDelayInterval}ms to respond`)
+  
         const playerId = socket.id
 
         if (playerId !== command.playerId) {

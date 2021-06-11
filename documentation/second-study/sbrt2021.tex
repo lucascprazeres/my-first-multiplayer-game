@@ -9,7 +9,6 @@
 
 %% ------------- English version ---------------
 \documentclass[english]{sbrt}
-\usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
 \usepackage{graphicx}
@@ -54,6 +53,13 @@
 \section{\textbf{Technical Background}}
 
 \section{\textbf{Game changes}}
+
+\section{\textbf{Method}}
+
+One of the network requirements of a multiplayer game is being able to handle many connections (from many players) as gracefully as possible, which provides a good real-time game experience. This is why is important to observe how time related parameters behave on such applications and the delay or latency during the gameplay is one of them. We managed to study how this temporal characteristic responds to linear variations on the number of active connections in a small experiment.
+
+The experiment consisted of a series of matches played with different numbers of clients and a single server hosting the game.
+The server was a common laptop running \textit{Ubuntu Linux} with the backend game instance listening on localhost on port 3000. Since localhost applications usually are not acessible to hosts on different LAN's, we used a port forwarding tool called \textit{ngrok}, which generated a tunnel using a USA located server to generate a public url to access the game server. Then, a few regular matches were played by clients located in different LANs - unlike the previous study [], in which the matches were played in a single LAN - while a native nodejs function called \textit{process.hrtime()} collected temporal benchmarks in background showing the average time it took for the server to respond to every player move. The results are shown in the next section.
 
 \section{\textbf{Results}}
 

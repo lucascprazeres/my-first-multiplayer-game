@@ -4,103 +4,100 @@
   <meta charset="utf-8">
   <title>My first multiplayer game</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono:wght@500&display=swap"
+    rel="stylesheet">
   <link href="./styles.css" rel="stylesheet">
   <script src="/socket.io/socket.io.js"></script>
 </head>
 
 <body>
-    <h1><strong>snake</strong>.<strong>io</strong></h1>
-    <div id="main-box">
-      <canvas id="screen" height="10" width="10"></canvas>
-      <table id="scoreboard">
-        <tr>
-          <th>player_id</th>
-          <th>score</th>
-        </tr>
-      </table>
-    </div>
-    <script type="module">
-      import createGame from "./game.js"
-      import createKeyboardListener from "./keyboard-listener.js"
-      import renderScreen from "./render-screen.js"
-      import updateScoreBoard from "./update-scoreboard.js"
-      import { getIntervalFrom, getTimestamp } from "./benchmark.js"
+  <h1><strong>snake</strong>.<strong>io</strong></h1>
+  <div id="main-box">
+    <canvas id="screen" height="10" width="10"></canvas>
+    <table id="scoreboard">
+      <tr>
+        <th>player_id</th>
+        <th>score</th>
+      </tr>
+    </table>
+  </div>
+  <script type="module">
+    import createGame from "./game.js"
+    import createKeyboardListener from "./keyboard-listener.js"
+    import renderScreen from "./render-screen.js"
+    import updateScoreBoard from "./update-scoreboard.js"
+    import { getIntervalFrom, getTimestamp } from "./benchmark.js"
 
-      const game = createGame()
-      game.start()
-      const keyboardListener = createKeyboardListener(document)
+    const game = createGame()
+    game.start()
+    const keyboardListener = createKeyboardListener(document)
 
-      const socket = io()
+    const socket = io()
 
-      const connectionStartTime = getTimestamp()
+    const connectionStartTime = getTimestamp()
 
-      setInterval(() => {
-        moveDelayValues.forEach(console.log)
-      }, 3000)
+    socket.on("connect", () => {
+      const connectionDelay = getIntervalFrom(connectionStartTime)
+      console.log(`took ${connectionDelay} ms to connect.`)
 
-      socket.on("connect", () => {
-        const connectionDelay = getIntervalFrom(connectionStartTime)
-        console.log(`took ${connectionDelay} ms to connect.`)
+      const playerId = socket.id
 
-        const playerId = socket.id
+      const screen = document.getElementById('screen')
+      renderScreen(screen, game, requestAnimationFrame, playerId)
+    })
 
-        const screen = document.getElementById('screen')
-        renderScreen(screen, game, requestAnimationFrame, playerId)
+    socket.on("setup", state => {
+      const playerId = socket.id
+      game.setState(state)
+
+      keyboardListener.registerPlayerId(playerId)
+      keyboardListener.subscribe(game.movePlayer)
+      keyboardListener.subscribe(command => {
+        socket.emit('move-player', command)
       })
+      updateScoreBoard(document, game, playerId)
+    })
 
-      socket.on("setup", state => {
-        const playerId = socket.id
-        game.setState(state)
-
-        keyboardListener.registerPlayerId(playerId)
-        keyboardListener.subscribe(game.movePlayer)
-        keyboardListener.subscribe(command => {
-          socket.emit('move-player', command)
-        })
+    socket.on("add-player", command => {
+      game.addPlayer({
+        playerId: command.playerId,
+        playerX: command.playerX,
+        playerY: command.playerY
+      })
+      if (command.playerId !== socket.id) {
         updateScoreBoard(document, game, playerId)
-      })
+      }
+    })
 
-      socket.on("add-player", command => {
-        game.addPlayer({
-          playerId: command.playerId,
-          playerX: command.playerX,
-          playerY: command.playerY
-        })
-        if (command.playerId !== socket.id) {
-          updateScoreBoard(document, game, playerId)
-        }
+    socket.on("remove-player", command => {
+      game.removePlayer({
+        playerId: command.playerId
       })
+      updateScoreBoard(document, game, playerId)
+    })
 
-      socket.on("remove-player", command => {
-        game.removePlayer({
-          playerId: command.playerId
-        })
-        updateScoreBoard(document, game, playerId)
-      })
+    socket.on("move-player", command => {
+      const playerId = socket.id
 
-      socket.on("move-player", command => {
+      if (playerId !== command.playerId) {
+        game.movePlayer(command)
+      } else {
         // this block of code will only work on the active player's browser
         const moveDelayInterval = getIntervalFrom(command.initialTimestamp)
         console.log(`took ${moveDelayInterval}ms to respond`)
-  
-        const playerId = socket.id
+      }
+    })
 
-        if (playerId !== command.playerId) {
-          game.movePlayer(command)
-        }
-      })
+    socket.on("add-fruit", command => {
+      game.addFruit(command)
+    })
 
-      socket.on("add-fruit", command => {
-        game.addFruit(command)
-      })
-
-      socket.on("remove-fruit", command => {
-        const playerId = socket.id
-        game.removeFruit(command)
-        updateScoreBoard(document, game, playerId)
-      })
-    </script>
+    socket.on("remove-fruit", command => {
+      const playerId = socket.id
+      game.removeFruit(command)
+      updateScoreBoard(document, game, playerId)
+    })
+  </script>
 </body>
 
 </html>

@@ -11,7 +11,7 @@ export default function createGame() {
   const observers = []
 
   function start() {
-    const interval = 3000
+    const interval = 4000
 
     setInterval(addFruit, interval)
   }

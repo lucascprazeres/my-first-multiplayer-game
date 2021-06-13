@@ -11,7 +11,7 @@ export default function createGame() {
   const observers = []
 
   function start() {
-    const interval = 3000
+    const interval = 4000
 
     setInterval(addFruit, interval)
   }
@@ -37,7 +37,8 @@ export default function createGame() {
 
     state.players[playerId] = {
       x: playerX,
-      y: playerY
+      y: playerY,
+      score: 0
     }
 
     notifyAll({
@@ -88,6 +89,10 @@ export default function createGame() {
     })
   }
 
+  function incrementPlayerScore(playerId) {
+    state.players[playerId].score += 1;
+  }
+
   function movePlayer(command) {
     notifyAll(command)
 
@@ -125,6 +130,7 @@ export default function createGame() {
 
       if (player.x == fruit.x && player.y == fruit.y) {
         removeFruit({ fruitId })
+        incrementPlayerScore(playerId)
       }
     }
   }
@@ -136,6 +142,7 @@ export default function createGame() {
     movePlayer,
     addFruit,
     removeFruit,
+    incrementPlayerScore,
     state,
     setState,
     subscribe

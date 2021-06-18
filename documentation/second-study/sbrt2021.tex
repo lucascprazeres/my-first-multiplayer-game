@@ -69,6 +69,19 @@ Socket.io is a Javascript library that enables Websocket capabilites in Javascri
 
 \section{\textbf{Game changes}}
 
+This version of the game has a few improvements, compared to what was presented in [reference]. Probably the most noticeable one is the addition of a scoreboard visible to all players in the match, which shows a relation of fruits collected per each player (represented as its websocket connection id). Moreover, an aesthetic improvement was made to the game so it could be closer to a regular game from the players's perspective, as shown in the fig. \ref{screen}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=10cm]{graphs/screen.png}
+  \caption{New game layout (with 3 players connected)}
+  \label{screen}
+\end{figure}
+
+Concerning to the game and network layer, the changes were respectively the points counting logic and
+a few benchmarks inserted using the nodejs native function \textit{process.hrtime()}. The last one helped us understand how time related parameters of the network details in this project behave when
+new players join the room, since it logs the websocket connection time and command-response delay on console when the browser loads the game.
+
 \section{\textbf{Method}}
 
 One essential network requirement of a multiplayer game is the ability to handle many connections (from many players) as gracefully as possible, while providing a good real-time game experience. This is why it is important to observe how time-related parameters behave on such applications, like delay or latency. This article manages to study how this temporal characteristic responds to linear variations on the number of active connections in a small experiment.
@@ -93,7 +106,7 @@ The results depict, as mentioned, a small incresing on the game latency, everyti
 
 \section{\textbf{Conclusion}}
 
-The higher demand for real-time web applications for business purpouses, like fast collaboration tools, and also for the entertainment of users, as it happens with streaming services and multiplayer games was followed by an emergence of platforms and programming tools which support these needs and the usage of the nodejs ecossytem along with the agile websocket protocol has proved to be a strong alternative in such scenarios.
+% The higher demand for real-time web applications for business purpouses, like fast collaboration tools, and also for the entertainment of users, as it happens with streaming services and multiplayer games was followed by an emergence of platforms and programming tools which support these needs and the usage of the nodejs ecossytem along with the agile websocket protocol has proved to be a strong alternative in such scenarios.
 
 \cite{chen2011framework}
 

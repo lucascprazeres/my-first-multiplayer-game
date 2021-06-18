@@ -20,9 +20,6 @@
         <th>score</th>
       </tr>
     </table>
-    <button id="toggle-mock">
-      Start Mock
-    </button>
   </div>
   <script type="module">
     import createGame from "./game.js"
@@ -47,19 +44,16 @@
     let playerMockButtonListener
 
     socket.on("connect", () => {
-      const connectionDelay = getIntervalFrom(connectionStartTime)
-      console.log(`took ${connectionDelay} ms to connect.`)
-
       const playerId = socket.id
 
       const screen = document.getElementById('screen')
       renderScreen(screen, game, requestAnimationFrame, playerId)
-
-      playerMock = createPlayerMock(playerId, game)
-      playerMockButtonListener = createPlayerMockButtonListener(document, playerMock)
     })
 
     socket.on("setup", state => {
+      const connectionDelay = getIntervalFrom(connectionStartTime)
+      console.log(`took ${connectionDelay} ms to connect.`)
+
       const playerId = socket.id
       game.setState(state)
 

@@ -28,6 +28,9 @@
     import updateScoreBoard from "./update-scoreboard.js"
     import { getIntervalFrom, getTimestamp } from "./benchmark.js"
 
+    import createPlayerMock from "./player-mock.js"
+    import createPlayerMockButtonListener from "./player-mock-button-listener.js"
+
     const game = createGame()
     game.start()
     const keyboardListener = createKeyboardListener(document)
@@ -35,11 +38,12 @@
     const socket = io()
 
     const connectionStartTime = getTimestamp()
+    const latencies = []
+
+    let playerMock
+    let playerMockButtonListener
 
     socket.on("connect", () => {
-      const connectionDelay = getIntervalFrom(connectionStartTime)
-      console.log(`took ${connectionDelay} ms to connect.`)
-
       const playerId = socket.id
 
       const screen = document.getElementById('screen')
@@ -47,6 +51,9 @@
     })
 
     socket.on("setup", state => {
+      const connectionDelay = getIntervalFrom(connectionStartTime)
+      console.log(`took ${connectionDelay} ms to connect.`)
+
       const playerId = socket.id
       game.setState(state)
 
@@ -84,7 +91,8 @@
       } else {
         // this block of code will only work on the active player's browser
         const moveDelayInterval = getIntervalFrom(command.initialTimestamp)
-        console.log(`took ${moveDelayInterval}ms to respond`)
+        latencies.push(moveDelayInterval)
+        console.log(JSON.stringify(latencies))
       }
     })
 

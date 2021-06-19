@@ -41,7 +41,7 @@
 
 
 \begin{abstract}
-
+  With the demand for low latency browser-based multiplayer games becoming higher as time passes, technologies like Websocket turn out to be essential in game development. In this paper, an analisys of the websocket traffic, more specifically its latency, is performed on a simple game. The results suggest that the number of players in the game can affect the game's latency by a significant amount.
 \end{abstract}
 
 \begin{keywords}
@@ -49,6 +49,9 @@
 \end{keywords}
 
 \section{\textbf{Introduction}}
+Browser-based multiplayer games have been very popular in the recent years. The wide variety of devices supported and the seemingly unexistent installation process are some attractives that justify this exponential growth. However, multiplayer games in general require low latency and high throughput to deliver a satisfactory experience, since all the players' moves in the game have to be synced in both server and client as soon as possible. Further creation of the Websocket technology, in 2011, provided an excelent way to do so, by enabling bidirectional full-duplex communications over a single TCP connection, in contrast to long-pooling and other solutions that used HTTP.
+
+This paper aims to analyze the Websocket traffic between both clients and server, using the previously made game in [reference].This article is organized as follows: Section II introduces the technologies used in this article, and Section III explains the changes made to the game in [reference]. Section IV explains how data used in the analisys was collected and plotted. The increase in latency presented, as more players connect to the server and move around, will be depicted in Section V.
 
 \section{\textbf{Technical Background}}
 
@@ -93,7 +96,7 @@ The server is a common laptop running \textit{Ubuntu Linux} with the backend gam
 
 The delay (or latency) is the time between an action and a system's reaction to it. In this particular context, it means the time it takes for the game server to notify all players when something changes on one of its clients, which could be a player moving, a fruit being removed or any other event triggered by an user interaction, from the moment an input is inserted on the keyboard. Since this response time depends on the whole network conditions from one host to another, it suffers variations even in similiar or identical game state scenarios, which brings the necessity of using statistical formulas like average or standard deviation to normalize the measured points. These techniques were applied to the experiment presented here and the results are depicted above.
 
-Moreover, is important to point that this study faced a few challenges in terms of resources. For instance, all connections needed to be active and generate a sufficient data flow during the match, which means someone actually playing the game, in opposition to an idle client, and the number of available volunters has limited how many samples could be collected on the experiment, making it difficult to analyze parameters other than the game latency. Nevertheless, despite of this obstacle it was possible to observe an increasing pattern on the latency measured with a linear variance on the number of players, as shown in Fig.\ref{latency}.
+Moreover, is important to point that this study faced a few challenges in terms of resources. For instance, all connections needed to be active and generate a sufficient data flow during the match, which means someone actually playing the game, in opposition to an idle client, and the number of available volunteers has limited how many samples could be collected on the experiment, making it difficult to analyze parameters other than the game latency. Nevertheless, it was possible to observe an increasing pattern on the latency measured with a linear variance on the number of players, as shown in Fig.\ref{latency}.
 
 \begin{figure}[H]
   \centering
@@ -102,11 +105,11 @@ Moreover, is important to point that this study faced a few challenges in terms 
   \label{latency}
 \end{figure}
 
-The results depict, as mentioned, a small incresing on the game latency, everytime a new connection is stablished with the server. This was the expected behavior, after all each new client means a new packet being sent though the network and due to the queue schema adopted by routers to handle priority of packets, in which the number of elements grows linearly, this also represents a similar raising pattern on latency. However, the fast data flow provided by the websocket protocol (as mentioned on section 2) attenuates the incresing on the response time, which could be significantly higher if each packet was followed up by a handshake operation as it happens with regular HTTP transmissions.
+The results depict, as mentioned, a small incresing on the game latency, everytime a new connection is stablished with the server. This was the expected behavior, after all each new client means a new packet being sent though the network, and due to the queue schema adopted by routers to handle priority of packets, in which the number of elements grows linearly, this also represents a similar raising pattern on latency. However, the fast data flow provided by the websocket protocol (as mentioned on section 2) attenuates the incresing on the response time, which could be significantly higher if each packet was followed up by a handshake operation as it happens with regular HTTP transmissions.
 
 \section{\textbf{Conclusion}}
 
-% The higher demand for real-time web applications for business purpouses, like fast collaboration tools, and also for the entertainment of users, as it happens with streaming services and multiplayer games was followed by an emergence of platforms and programming tools which support these needs and the usage of the nodejs ecossytem along with the agile websocket protocol has proved to be a strong alternative in such scenarios.
+The higher demand for real-time web applications for business purpouses, like fast collaboration tools and multiplayer games, was followed by an emergence of platforms and programming tools which support these needs. In this paper, the game latency is analyzed, as more players connect to the server and move around. The results suggest that the number of players in the game can affect the game's latency by a significant amount, due to the packets' priority in routing, but that's attenuated by the websocket protocol data flow. This factors really shows why websocket is essential in browser-based multiplayer games.
 
 \cite{chen2011framework}
 

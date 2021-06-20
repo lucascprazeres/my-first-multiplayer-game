@@ -49,9 +49,9 @@
 \end{keywords}
 
 \section{\textbf{Introduction}}
-Browser-based multiplayer games have been very popular in the recent years. The wide variety of devices supported and the seemingly unexistent installation process are some attractives that justify this exponential growth. However, multiplayer games in general require low latency and high throughput to deliver a satisfactory experience, since all the players' moves in the game have to be synced in both server and client as soon as possible. Further creation of the Websocket technology, in 2011, provided an excelent way to do so, by enabling bidirectional full-duplex communications over a single TCP connection, in contrast to long-pooling and other solutions that used HTTP.
+Browser-based multiplayer games have been very popular in the recent years. The wide variety of devices supported and the seemingly unexistent installation process are some attractives that justify this exponential growth~\cite{chen2011framework}. However, multiplayer games in general require low latency and high throughput to deliver a satisfactory experience, since all the players' moves in the game have to be synced in both server and client as soon as possible. Further creation of the Websocket technology, in 2011, provided an excelent way to do so, by enabling bidirectional full-duplex communications over a single TCP connection, in contrast to long-pooling and other solutions that used HTTP~\cite{liu2012research}.
 
-This paper aims to analyze the Websocket traffic between both clients and server, using the previously made game in [reference].This article is organized as follows: Section II introduces the technologies used in this article, and Section III explains the changes made to the game in [reference]. Section IV explains how data used in the analisys was collected and plotted. The increase in latency presented, as more players connect to the server and move around, will be depicted in Section V.
+This paper aims to analyze the Websocket traffic between both clients and server, using the previously made game in~\cite{previous}. This article is organized as follows: Section II introduces the technologies used in this article, and Section III explains the changes made to the game in~\cite{previous}. Section IV explains how data used in the analisys was collected and plotted. The increase in latency presented, as more players connect to the server and move around, will be depicted in Section V.
 
 \section{\textbf{Technical Background}}
 
@@ -65,14 +65,14 @@ The websocket technology is crucial to applications that require low latency, su
 \subsection{\textbf{Node.js}}
 Node.js is a server environment that enables Javascript on the server side, without a browser. It uses an event-driven, asynchronous I/O, which makes Node.js capable of processing various requests simultaneously, and consequently, highly scalable.
 
-Node.js provides a low cost, highly scalable environment for server-side applications. This technology is very useful on streaming web applications, real-time collaboration tools, online chats, microsservices and multiplayer games, since the server has to handle multiple requests from clients.
+Node.js provides a low cost, highly scalable environment for server-side applications. This technology is very useful on streaming web applications, real-time collaboration tools, online chats, microsservices and multiplayer games, since the server has to handle multiple requests from client~\cite{node-async}.
 
 \subsection{\textbf{Socket.io}}
 Socket.io is a Javascript library that enables Websocket capabilites in Javascript. With a few lines of code, an application can start listening to Websocket connections on the desired port. It is a very powerful tool to applications that depend on fast exchange of data, like multiplayer games.
 
 \section{\textbf{Game changes}}
 
-This version of the game has a few improvements, compared to what was presented in [reference]. Probably the most noticeable one is the addition of a scoreboard visible to all players in the match, which shows a relation of fruits collected per each player (represented as its websocket connection id). Moreover, an aesthetic improvement was made to the game so it could be closer to a regular game from the players's perspective, as shown in the fig. \ref{screen}.
+This version of the game has a few improvements, compared to what was presented in~\cite{previous}. Probably the most noticeable one is the addition of a scoreboard visible to all players in the match, which shows a relation of fruits collected per each player (represented as its websocket connection id). Moreover, an aesthetic improvement was made to the game so it could be closer to a regular game from the players's perspective, as shown in the fig. \ref{screen}.
 
 \begin{figure}[H]
   \centering
@@ -90,7 +90,7 @@ new players join the room, since it logs the websocket connection time and comma
 One essential network requirement of a multiplayer game is the ability to handle many connections (from many players) as gracefully as possible, while providing a good real-time game experience. This is why it is important to observe how time-related parameters behave on such applications, like delay or latency. This article manages to study how this temporal characteristic responds to linear variations on the number of active connections in a small experiment.
 
 The experiment consists of a series of matches played with different numbers of clients and a single server hosting the game.
-The server is a common laptop running \textit{Ubuntu Linux} with the backend game instance listening on localhost on port 3000. Since localhost applications usually are not acessible to hosts on different LANs, we used a port forwarding tool called \textit{ngrok}, which generated a tunnel using a USA located server to generate a public url to access the game server. Then, a few regular matches were played by clients located in different LANs - unlike the previous study [], in which the matches were played in a single LAN - while a native node.js function called \textit{process.hrtime()} collected temporal benchmarks in background showing the average time it took for the server to respond to every player move. The linear relation between both parameters was plotted using the Python library \textit{matplotlib} and are presented in the next section.
+The server is a common laptop running \textit{Ubuntu Linux} with the backend game instance listening on localhost on port 3000. Since localhost applications usually are not acessible to hosts on different LANs, we used a port forwarding tool called \textit{ngrok}, which generated a tunnel using a USA located server to generate a public url to access the game server. Then, a few regular matches were played by clients located in different LANs - unlike the previous study~\cite{previous}, in which the matches were played in a single LAN - while a native node.js function called \textit{process.hrtime()} collected temporal benchmarks in background showing the average time it took for the server to respond to every player move. The linear relation between both parameters was plotted using the Python library \textit{matplotlib} and are presented in the next section.
 
 \section{\textbf{Results}}
 
@@ -110,8 +110,6 @@ The results depict, as mentioned, a small increasing on the game latency, every 
 \section{\textbf{Conclusion}}
 
 The higher demand for real-time web applications for business purpouses, like fast collaboration tools and multiplayer games, was followed by an emergence of platforms and programming tools which support these needs. In this paper, the game latency is analyzed, as more players connect to the server and move around. The results suggest that the number of players in the game can affect the game's latency by a significant amount, due to the packets' priority in routing, but that's attenuated by the websocket protocol data flow. This factors really shows why websocket is essential in browser-based multiplayer games.
-
-\cite{chen2011framework}
 
 \bibliography{sbrt}
 \bibliographystyle{IEEEtran}
